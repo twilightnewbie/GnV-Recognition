@@ -39,7 +39,7 @@ The HUIT-MIFNet architecture performs decision-level fusion using an Adaptive Mu
 ---
 
 ##  HUIT-MGV Dataset
-The HUIT-MGV Dataset is a custom multimodal dataset recorded under realistic indoor and outdoor conditions.
+The HUIT-MGV Dataset : https://drive.google.com/drive/folders/1A5OYycscantQX-BD2GiaGgoZuB2uD3nL?usp=sharing
 
 * Subjects: 8 enrolled identities (Rc1–Rc8).
 * Environmental Variability: Includes variations in lighting, background noise, and partial body occlusion.
