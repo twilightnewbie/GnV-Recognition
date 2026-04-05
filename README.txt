@@ -75,8 +75,3 @@ The HUIT-MGV Dataset : https://drive.google.com/drive/folders/1A5OYycscantQX-BD2
 
 ---
 
-## 🔗 Citation
-If you use HUIT-MIFNet or the HUIT-RTID System in your research, please cite:
-```text
-Tô Duy Tài, Đỗ Minh Tiến, Phan Văn Khải, Vũ Đức Thịnh. (2026). A REAL-TIME MULTIMODAL PERSON IDENTIFICATION SYSTEM BASED ON VOICE AND GAIT FUSION. Faculty of Information Technology, Ho Chi Minh City University of Industry and Trade (HUIT).
-```
