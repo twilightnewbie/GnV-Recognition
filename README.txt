@@ -1,83 +1,82 @@
-##Real-Time Multimodal Gait and Voice Identification
+# HUIT-RTID: Real-Time Multimodal Gait and Voice Identification System
 
 ## Overview
+HUIT-RTID is a lightweight, real-time multimodal biometric framework designed to identify individuals by integrating skeleton-based gait patterns and voice signatures. The system utilizes the HUIT-MIFNet architecture to adaptively combine modality outputs, overcoming common unimodal failures such as visual occlusion or acoustic noise.
 
-GVI (Gait and Voice Identification) is a real-time multimodal biometric framework that integrates skeleton-based gait recognition and voice recognition to enhance robustness in real-world environments. 
- - The system is designed to overcome unimodal limitations, such as gait occlusion and acoustic noise, through an adaptive reliability-driven approach.
- - Hardware: Operates on consumer-grade hardware (standard webcam and microphone) without specialized acceleration.
- - Fusion Strategy: Employs an adaptive multiplicative fusion mechanism at the decision level to maintain stability under degraded conditions.
- - Performance: Achieves a real-time identification accuracy of 91.3%.
+* Proposed Method: HUIT-MIFNet (HUIT Multimodal Identification Fusion Network).
+* Dataset: HUIT-MGV Dataset (HUIT Multimodal Gait-Voice Dataset).
+* System Core: HUIT-RTID System (HUIT Real-Time Identification System).
+* Performance: Achieves 91.3% real-time accuracy and maintains 10 FPS on consumer-grade CPUs.
+
 ---
 
-## System Architecture
-
-The framework consists of two parallel unimodal pipelines:
+##  System Architecture
+The HUIT-RTID system operates through two parallel, independent pipelines integrated at the decision level:
 
 ### 1. Gait Recognition Pipeline
-
-- Real-time skeleton extraction using MediaPipe
-- Representation: 33 keypoints (flattened into 66-dimensional vectors)
-- Modeling: Sliding window of 30 frames with a step of 10.
-- Classifier: Two-layer Bidirectional LSTM with a custom Temporal Attention mechanism
-
----
+* Skeleton Extraction: Real-time pose estimation using MediaPipe.
+* Feature Representation: 33 skeletal keypoints flattened into 66-dimensional vectors.
+* Temporal Modeling: Processes sequences using a sliding window of 30 frames with a step of 10.
+* Classifier: A Bidirectional LSTM enhanced with a custom Temporal Attention mechanism to focus on discriminative gait frames.
 
 ### 2. Voice Recognition Pipeline
-
-- Audio recording at 16 kHz
-- MFCC feature extraction (40 MFCC + delta + delta-delta = 120 features)
-- Temporal modeling using LSTM
-- Softmax-based confidence estimation
+* Audio Capture: 16 kHz sampling rate via consumer-grade microphones.
+* Feature Extraction: 120-dimensional vectors comprising 40 MFCCs plus their first- and second-order delta derivatives.
+* Classifier: A deep 5-layer Stacked LSTM designed to capture long-range acoustic characteristics.
 
 ---
 
-## Decision-Level Fusion
+##  HUIT-MIFNet: Adaptive Fusion Logic
+The HUIT-MIFNet architecture performs decision-level fusion using an Adaptive Multiplicative Fusion strategy:
 
-The final identity prediction is determined using an **Adaptive Multiplicative Fusion** strategy:
   p_"fused" =(p_v⊙p_g)/(∥p_v⊙p_g ∥_1+ϵ)
 
-- If voice confidence is reliable → prioritize voice prediction  
-- Otherwise → fallback to gait recognition  
-- Product-rule fusion is applied to combine probability distributions  
-- Gating: Acts as a dynamic gating mechanism where one modality's confidence scales the other's influence.
-- Stability: Applies majority-vote smoothing over a 10-frame sliding window.
-- Threshold: A confidence threshold of 0.6 is required; otherwise, the identity is labeled as "UNKNOWN".
-This approach improves system robustness under:
-- Noisy audio environments  
-- Partial body occlusion  
-- Lighting variations  
+* Dynamic Gating: Acts as a gating mechanism where the confidence of one modality naturally scales the influence of the other.
+* Robust Prioritization: Prioritizes the more reliable modality during inference (e.g., fallback to gait if audio is noisy).
+* Temporal Smoothing: Stabilizes predictions using majority-vote smoothing over the 10 most recent results.
+* Security Threshold: A confidence threshold of 0.6 is applied; predictions below this are labeled as "UNKNOWN" to prevent false positives.
 
 ---
 
-## Dataset: GVI Dataset
+##  HUIT-MGV Dataset
+The HUIT-MGV Dataset is a custom multimodal dataset recorded under realistic indoor and outdoor conditions.
 
-A small-scale multimodal dataset collected for real-time identification research.
-
-### Dataset Characteristics
-
-- 8 subjects (labeled Rc1–Rc8)
-- Multiple recording sessions per subject  
-- Audio recorded at 16 kHz  
-- Skeleton sequences extracted from video and webcam
-- Includes environmental variations:
-  - Background noise  
-  - Lighting changes  
-  - Movement variations  
-
-> Due to privacy and biometric data considerations, the dataset is **not publicly released**.
+* Subjects: 8 enrolled identities (Rc1–Rc8).
+* Environmental Variability: Includes variations in lighting, background noise, and partial body occlusion.
+* Privacy Note: Due to the sensitive nature of biometric data, this dataset is not publicly released.
 
 ---
 
-## Models
+##  Experimental Results
+| Method             | Accuracy (%)   | Hardware            | FPS          |
+| :---               | :---           | :---                | :---         |
+| Voice-only         | 95.42%         | Consumer-grade CPU  | Real-time    |
+| Gait-only          | 85–92%         | Consumer-grade CPU  | Real-time    |
+| HUIT-RTID (Fusion) | 91.30%         | Consumer-grade CPU  | Real-time    |
 
-### Core Identification Models
-
-- **Gait Recognition**: Skeleton + LSTM + Attention (TensorFlow/Keras)  
-- **Speaker Identification**: MFCC + LSTM (TensorFlow/Keras)  
+* HUIT-RTID significantly outperforms traditional score-averaging fusion (78.6%) under degraded conditions.
 
 ---
 
-## Installation
+## 🛠 Installation
+1.  Clone the Repository:
+    ```bash
+    git clone https://github.com/twilightnewbie/GnV-Recognition.git
+    cd GnV-Recognition
+    ```
+2.  Install Dependencies:
+    ```bash
+    pip install -r requirements.txt
+    ```
+3.  Run the System:
+    ```bash
+    python main.py
+    ```
 
-```bash
-pip install -r requirements.txt
+---
+
+## 🔗 Citation
+If you use HUIT-MIFNet or the HUIT-RTID System in your research, please cite:
+```text
+Tô Duy Tài, Đỗ Minh Tiến, Phan Văn Khải, Vũ Đức Thịnh. (2026). A REAL-TIME MULTIMODAL PERSON IDENTIFICATION SYSTEM BASED ON VOICE AND GAIT FUSION. Faculty of Information Technology, Ho Chi Minh City University of Industry and Trade (HUIT).
+```
