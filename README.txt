@@ -59,16 +59,12 @@ The HUIT-MGV Dataset : https://drive.google.com/drive/folders/1A5OYycscantQX-BD2
 ---
 
 ## 🛠 Installation
-1.  Clone the Repository:
-    ```bash
-    git clone https://github.com/twilightnewbie/GnV-Recognition.git
-    cd GnV-Recognition
-    ```
-2.  Install Dependencies:
+
+1.  Install Dependencies:
     ```bash
     pip install -r requirements.txt
     ```
-3.  Run the System:
+2.  Run the System:
     ```bash
     python main.py
     ```
